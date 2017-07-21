@@ -51,8 +51,18 @@ RSpec.describe User, type: :model do
 
   describe 'relationships' do
 
-    it 'has one cart'
+    it 'has one cart' do
+      user = create(:user)
+      user.create_cart(status: 'Active')
 
-    it 'has many order'
+      expect(user.cart.id).not_to equal(nil) 
+    end
+
+    it 'has many order' do
+      user = create(:user)
+      user.orders.create
+
+      expect(user.orders.first.id).not_to equal(nil) 
+    end
   end
 end
