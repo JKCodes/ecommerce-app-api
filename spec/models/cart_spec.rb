@@ -43,4 +43,23 @@ RSpec.describe Cart, type: :model do
       expect(cart.user.email).to eq("test@test.com")
     end
   end
+
+  desribe 'instance methods' do 
+
+    describe 'add_an_item' do
+
+      it 'adds an item to the cart'
+    end
+
+    describe 'total' do 
+      it "calculates the price of the cart's items"
+    end
+
+    describe "checkout" do
+
+      it "clears out the cart and creates an order with the carts items"
+
+      it "also updates the item inventory count"
+    end
+  end
 end
