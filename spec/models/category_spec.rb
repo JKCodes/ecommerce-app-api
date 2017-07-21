@@ -16,6 +16,11 @@ RSpec.describe Category, type: :model do
 
   describe 'relationships' do
 
-    it 'has many items'
+    it 'has many items' do
+      category = create(:category)
+      category.items.create(title: "Title", inventory: 1, price: "33.33")
+
+      expect(category.items.count).to eq(1)
+    end
   end
 end
