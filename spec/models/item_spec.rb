@@ -39,7 +39,12 @@ RSpec.describe Item, type: :model do
     end
 
     it 'has many order items' do
+      item = create(:item)
+      order = create(:order)
+      item.order_items.create(quantity: 1, order: order)
 
+      expect(item.order_items.count).to eq(1)
+      expect(item.order_items.first.id).not_to eq(nil)
     end
   end
 end
