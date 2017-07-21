@@ -19,7 +19,11 @@ RSpec.describe Item, type: :model do
 
   describe 'relationships' do
 
-    it 'belongs to a category'
+    it 'belongs to a category' do
+      item = create(:item)
+
+      expect(item.category.title).to eq("clothing")
+    end
 
     it 'has many line items'
 
