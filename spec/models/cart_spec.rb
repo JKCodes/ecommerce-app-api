@@ -97,7 +97,10 @@ RSpec.describe Cart, type: :model do
       end
 
       it "does not add the item if the item's inventory count is 0" do
+        item = create(:item, inventory: 0)
+        @cart.add_item(item, 8)
 
+        expect(@cart.line_items.count).to eq(0)
       end
     end
 
