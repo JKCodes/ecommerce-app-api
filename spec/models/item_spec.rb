@@ -67,9 +67,15 @@ RSpec.describe Item, type: :model do
 
     describe "update_inventory_count" do
 
-      it "increases the inventory count by quantity if type is 'add'"
+      it "increases the inventory count by quantity if type is 'add'" do
+        @item.update_inventory_count(3, 'add')
+        expect(@item.inventory).to eq(7)
+      end
 
-      it "reduces the inventory count by quantity if type is 'remove'"      
+      it "reduces the inventory count by quantity if type is 'remove'" do
+        @item.update_inventory_count(1, 'remove')
+        expect(@item.inventory).to eq(3)
+      end
     end
   end  
 end
