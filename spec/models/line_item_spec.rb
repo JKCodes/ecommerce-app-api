@@ -17,8 +17,16 @@ RSpec.describe LineItem, type: :model do
 
   describe 'relationships' do
 
-    it 'belongs to an item'
+    it 'belongs to an item' do
+      line_item = create(:line_item)
 
-    it 'belongs to a cart'
+      expect(line_item.item.title).to eq("Legendary Link Hoodie")
+    end
+
+    it 'belongs to a cart' do 
+      line_item = create(:line_item)
+
+      expect(line_item.cart.id).not_to eq(nil)
+    end
   end
 end
