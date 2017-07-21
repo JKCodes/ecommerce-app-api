@@ -9,6 +9,11 @@ RSpec.describe User, type: :model do
     it 'requres that an email is unique'
   end
 
+  describe 'on save' do
+
+    it 'hashes the password'
+  end
+
   describe 'relationships' do
 
     it 'has one cart'
