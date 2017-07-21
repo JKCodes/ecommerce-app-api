@@ -118,7 +118,12 @@ RSpec.describe Cart, type: :model do
 
     describe "checkout" do
 
-      it "clears out the cart and creates an order with the carts items"
+      it "clears out the cart and creates an order with the carts items" do
+        @cart.checkout
+
+        expect(@cart.line_items.count).to eq(0)
+        expect(@cart.user.orders.count).to eq(1)
+      end
 
       it "also updates the item inventory count"
     end
