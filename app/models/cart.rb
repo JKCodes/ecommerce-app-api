@@ -22,4 +22,8 @@ class Cart < ApplicationRecord
       item.is_inventory_available?(quantity) ? quantity : item.inventory
     end
   end
+
+  def total
+    self.line_items.inject(0) { |sum, item| item.total + sum }
+  end
 end
