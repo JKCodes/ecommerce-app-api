@@ -51,11 +51,16 @@ RSpec.describe User, type: :model do
 
   describe 'relationships' do
 
-    it 'has one cart' do
+    it 'has one cart that is destroyed upon deletion of user' do
       user = create(:user)
-      user.create_cart(status: 'Active')
+      cart = user.create_cart(status: 'Active')
 
       expect(user.cart.id).not_to equal(nil) 
+
+      user.destroy
+      cart = Cart.find_by(id: cart.id)
+
+      expect(cart).to eq(nil)
     end
 
     it 'has many order' do
