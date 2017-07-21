@@ -44,11 +44,61 @@ RSpec.describe Cart, type: :model do
     end
   end
 
-  desribe 'instance methods' do 
+  describe 'instance methods' do 
 
-    describe 'add_an_item' do
+    before(:each) do
+      @cart = create(:cart)
+      @item = create(:item, inventory: 4)
+    end
 
-      it 'adds an item to the cart'
+    describe "set_quantity" do
+
+      it "does not exceed the avilable inventory count of the item" do
+        line_item = LineItem.create(cart: @cart, item: @item, quantity: 1)
+        
+        expect(@cart.set_quantity(line_item, @item, 10)).to eq(4)
+      end
+
+      it "returns adjusted quantity of an existing line item" do
+        line_item = LineItem.create(cart: @cart, item: @item, quantity: 1)
+
+        expect(@cart.set_quantity(line_item, @item, 1)).to eq(2)
+      end
+
+      it "returns the quantity passed as an argument when line item is nil and item inventory is available" do
+        expect(@cart.set_quantity(nil, @item, 3)).to eq(3)
+      end
+
+      it "does not exceed the avilable inventory count of the item when a line_item is not passed as an argument" do        
+        expect(@cart.set_quantity(nil, @item, 10)).to eq(4)
+      end
+    end
+
+    describe 'add_item' do
+
+      it 'adds an item to the cart' do
+        @cart.add_item(@item, 2)
+
+        expect(@cart.line_items.first.quantity).to eq(2)
+      end
+
+      it "updates the quantity if an item already exists in the cart" do
+        @cart.add_item(@item, 2)
+        @cart.add_item(@item, 1)
+
+        expect(@cart.line_items.count).to eq(1)
+        expect(@cart.line_items.first.quantity).to eq(3)
+      end
+
+      it "does not update the quantity if quantity is greater than item inventory count" do
+        @cart.add_item(@item, 8)
+
+        expect(@cart.line_items.first.quantity).to eq(4)
+      end
+
+      it "does not add the item if the item's inventory count is 0" do
+
+      end
     end
 
     describe 'total' do 
