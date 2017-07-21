@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
     email "test@test.com"
-    password_digest "super secret"
+    password "super secret"
   end
 end
