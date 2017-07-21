@@ -14,7 +14,9 @@ RSpec.describe User, type: :model do
       ])
     end
 
-    it 'requres that an email is unique'
+    it 'requires that an email is unique'
+
+    it 'requires that an email is valid'
   end
 
   describe 'on save' do
