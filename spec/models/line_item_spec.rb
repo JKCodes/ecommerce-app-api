@@ -1,5 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe LineItem, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'validation' do
+
+    it 'requires a cart, item and quantity'
+  end
+
+  describe 'relationships' do
+
+    it 'belongs to an item'
+
+    it 'belongs to a cart'
+  end
 end
