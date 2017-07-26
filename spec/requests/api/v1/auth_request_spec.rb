@@ -4,12 +4,19 @@ RSpec.describe "Api::V1::Users", type: :request do
 
   describe "POSTS /auth" do
 
+    before(:each) do
+      User.create(
+        email: "test@test.com",
+        password: "password"
+      )
+    end
+
     describe "on success" do
 
       before(:each) do 
         params = {
           user: {
-            email: "test@example.com",
+            email: "test@test.com",
             password: "password"
           }
         }
@@ -26,20 +33,13 @@ RSpec.describe "Api::V1::Users", type: :request do
 
         expect(@response.status).to eq(200)
         expect(body['user']['id']).not_to eq(nil)
-        expect(body['user']['email']).to eq("test@example.com")
+        expect(body['user']['email']).to eq("test@test.com")
         expect(body['user']['password_digest']).to eq(nil)
         expect(body['token']).not_to eq(nil)
       end
     end
 
     describe "on error" do
-
-      before(:each) do
-        User.create(
-          email: "test@test.com",
-          password: "password"
-        )
-      end
 
       it "unable to find user with email" do
         params = {
@@ -55,7 +55,7 @@ RSpec.describe "Api::V1::Users", type: :request do
 
         body = JSON.parse(response.body)
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(500)
         expect(body["errors"]).to eq({
           "email"=>["Unable to find a user with the provided email address"]
         })
@@ -75,7 +75,7 @@ RSpec.describe "Api::V1::Users", type: :request do
 
         body = JSON.parse(response.body)
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(500)
         expect(body["errors"]).to eq({
           "password"=>["Password does not match the provided email"]
         })
