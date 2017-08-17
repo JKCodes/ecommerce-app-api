@@ -21,6 +21,23 @@ class Api::V1::AuthController < ApplicationController
     end
   end
 
+  def fetch
+    token = params["token"]
+    begin
+      user_id = Auth.decode_token(token)[0]["user_id"]
+      user = User.find(user_id)
+      render json: {
+        user: user
+      }
+    rescue JWT::VerificationError
+      render json: {
+        errors: {
+          user: ["No user exists with the provided token"]
+        }
+      }, status: 500
+    end
+  end
+
   def refresh
     render "users/user_with_token.json.jbuilder", user: @user
   end

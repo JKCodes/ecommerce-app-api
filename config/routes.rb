@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       # /api/v1/auth
       post '/auth', to: 'auth#login'
       post '/auth/refresh', to: "auth#refresh"
+      post '/auth/fetch', to: "auth#fetch"
 
       # /api/v1/carts
       resources :carts, only: [:show, :update]
