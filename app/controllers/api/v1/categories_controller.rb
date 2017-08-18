@@ -2,7 +2,7 @@ class Api::V1::CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :update, :destroy]
 
   def index
-    render json: Category.All
+    render json: Category.all
   end
 
   def create
@@ -33,7 +33,7 @@ class Api::V1::CategoriesController < ApplicationController
       render json: { error: "Unable to delete the requested category" }, status: 400
     end
   end
-  
+
   private
 
     def set_category
