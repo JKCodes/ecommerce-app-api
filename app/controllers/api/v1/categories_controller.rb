@@ -26,6 +26,14 @@ class Api::V1::CategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    if @category.destroy
+      render status: 204
+    else
+      render json: { error: "Unable to delete the requested category" }, status: 400
+    end
+  end
+  
   private
 
     def set_category
