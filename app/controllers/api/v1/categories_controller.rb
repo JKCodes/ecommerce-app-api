@@ -19,7 +19,11 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def update
-
+    if @category.update(category_params)
+      render json: @category
+    else
+      render json: { error: category.errors }, status: 400
+    end
   end
 
   private
